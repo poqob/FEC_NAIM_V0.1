@@ -42,6 +42,11 @@ public:
     Serial.println(RoutingTable::getInstance().toString());
   }
 
+  void monitorLocalServices()
+  {
+    Serial.println(GatewayService::getInstance().serviceCount());
+  }
+
   // network listener
   void listen()
   {

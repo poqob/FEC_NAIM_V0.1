@@ -55,6 +55,7 @@ public:
     if (ser->available() > 0)
     {
       result = ser->readString();
+      // cclear buffer
       if (result.length() < 5) // +1 end char exprassion.
         return "";
     }

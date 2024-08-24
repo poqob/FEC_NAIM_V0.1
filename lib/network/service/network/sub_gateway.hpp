@@ -39,6 +39,11 @@ public:
     }
   }
 
+  uint8_t serviceCount()
+  {
+    return slist.getSize();
+  }
+
 private:
   // Private constructor for Singleton pattern
   GatewayService()

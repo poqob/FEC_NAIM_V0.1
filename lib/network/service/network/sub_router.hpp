@@ -54,7 +54,6 @@ public:
     // find target device to direct package to a channel.
     uint8_t channelId = rtable.quarry(pkg->to());
     ChannelManager::getInstance().getChannelByChannelId(channelId)->write(pkg->getContent());
-    // delete pkg.
     delete pkg;
   }
 
