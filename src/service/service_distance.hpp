@@ -32,9 +32,9 @@ private: // constant
   {
     GatewayService::getInstance().subscribeService(this);
     DistanceHardware0 = new DistanceHardware(3,4); // pin tanımı şuanlık rastgele
-    DistanceHardware1 = new DistanceHardware(4,5);
-    DistanceHardware2 = new DistanceHardware(5,6);
-    DistanceHardware3 = new DistanceHardware(7,8);
+    DistanceHardware1 = new DistanceHardware(5,6);
+    DistanceHardware2 = new DistanceHardware(6,7);
+    DistanceHardware3 = new DistanceHardware(8,9);
 
   }
   void service() override

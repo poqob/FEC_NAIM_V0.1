@@ -28,7 +28,7 @@ private:
   void mzkontrol()
   {
     value = digitalRead(pin); 
-    if (value == 0) {
+    if (value == 1) {
      engelvar = true;
     }
     else{
@@ -36,7 +36,7 @@ private:
     }
     
   }
-  String read()
+  Bool read()
     {
         return Bool (engelvar);
     }

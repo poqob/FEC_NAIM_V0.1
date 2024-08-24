@@ -6,6 +6,8 @@
 #include "lib/network/service/network/sub_uart.hpp"
 #include "src/service/service_example.hpp"
 #include "src/service/service_motor.hpp"
+#include "src/service/service_distance.hpp"
+#include "src/service/service_mz80.hpp"
 
 NetworkService *network = &NetworkService::getInstance();
 
@@ -20,8 +22,8 @@ void setup()
 
   ExampleService *exampleService = new ExampleService();
   MotorService *motorService = new MotorService();
-
-  motorService->service();
+  DistanceService *distanceService = new DistanceService();
+  Mz80Service *mz80Service = new Mz80Service();
 }
 
 void loop()
