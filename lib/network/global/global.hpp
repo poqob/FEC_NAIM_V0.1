@@ -27,7 +27,7 @@ struct PackageStatics
 class Global
 {
 public:
-  Device *device = new Device(0, 0, "uno");
+  Device *device;
   PackageConstraints packageConstraints;
   PackageStatics packageStatics;
 

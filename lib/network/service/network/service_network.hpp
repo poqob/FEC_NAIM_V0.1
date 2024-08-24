@@ -35,16 +35,28 @@ public:
 
   void monitorChannels()
   {
-    Serial.println(ChannelManager::getInstance().toString());
+    String result = ChannelManager::getInstance().toString();
+    if (result.length() == 0)
+      Serial.println("No routes found.");
+    else
+      Serial.println(result);
   }
   void monitorRoutes()
   {
-    Serial.println(RoutingTable::getInstance().toString());
+    String result = RoutingTable::getInstance().toString();
+    if (result.length() == 0)
+      Serial.println("No routes found.");
+    else
+      Serial.println(result);
   }
 
   void monitorLocalServices()
   {
-    Serial.println(GatewayService::getInstance().serviceCount());
+    String result = String(GatewayService::getInstance().serviceCount());
+    if (result.length() == 0)
+      Serial.println("No routes found.");
+    else
+      Serial.println(result);
   }
 
   // network listener
