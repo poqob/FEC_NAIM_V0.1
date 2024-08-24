@@ -1,58 +1,55 @@
-#include <stdint.h>
-#include "Arduino.h"
 #ifndef MZ80_SERVICE_HPP
 #define MZ80_SERVICE_HPP
+
+#include "../../lib/network/service/comm_service.hpp"
+#include "../../lib/network/service/network/service_network.hpp"
+#include "../../lib/network/global/global.hpp"
+#include "hardware/hardware_mz80.hpp"
+
+#include <stdint.h>
+#include "Arduino.h"
 #include "HardwareSerial.h"
-#include "model_packet.hpp"
-#include "service_lineer_motor.hpp"
 /*
- * @author: Mustafa BICER
+ * @author: Haktan Serdar Genç
  * @date: 28.07.24
  * @file: MZ80  service.
  */
 
-class Mz80Service
+class Mz80Service : public CommService
 {
-private:
-  int value;
-  bool newPackage;
-  bool listen;
-  LineerMotorService *lineerMotorService = LineerMotorService::getInstance();
+  private: // constant
+  Package *p;
+  Device *device = Global::getInstance().device;
 
-  // PACKET DESIGN PATTERN
-private:
-  void sendPackage()
+  Mz80Hardware *mz80Hardware0;
+  Mz80Hardware *mz80Hardware1;
+  Mz80Hardware *mz80Hardware2;
+  Mz80Hardware *mz80Hardware3;
+  public:
+  DistanceService() : CommService(1, 3) // constant
   {
-    Packet _packet;
-    _packet = Packet("ard", "mz", 1, "0");
-    lineerMotorService->receivePackage(_packet);
-  }
+    GatewayService::getInstance().subscribeService(this);
+    Mz80Hardware0 = new DistanceHardware(9); // pin tanımı şuanlık rastgele
+    Mz80Hardware1 = new DistanceHardware(10);
+    Mz80Hardware2 = new DistanceHardware(11);
+    Mz80Hardware3 = new DistanceHardware(12);
 
-  void receivePackage()
+  }
+  void service() override
   {
-  }
+    Package _package = Package::build(device->id, device->subnet, group, id, device->id, device->subnet, group, 0, Mz80Hardware0->read());
+    p = new Package(_package.getContent());
+    NetworkService::getInstance().send(p);
+  };
 
-public:
-  
-  void setup()
+  void handle(Package *package) override
   {
-    listen = false;
-    newPackage = false;
-    
-    //pinMode(mz80->getPin(), INPUT);
-  }
 
-  void service()
-  {
-    value = digitalRead(28);
-    if (value == 0) // dedector
-      sendPackage();
-  }
+  };
 
-  Mz80Service()
-  {
-  }
+  void response(String data) override {};
 
-  ~Mz80Service() {}
+  ~DistanceService() {}
 };
+
 #endif // MZ80_SERVICE_HPP
