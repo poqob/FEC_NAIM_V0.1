@@ -17,9 +17,9 @@ private:
   int pin;
   bool engelvar;
 
-  Mz80Hardware(int pin) 
-    : Mz80Service(), pin(pin), value(0), listen(false) {}
-
+ Mz80Hardware(int pin) 
+    : Mz80Service(), pin(pin), value(0), listen(false), engelvar(false) {}
+    
   void setup()
   {
     listen = false;
