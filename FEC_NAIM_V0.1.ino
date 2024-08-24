@@ -5,29 +5,23 @@
 #include "lib/network/global/global.hpp"
 #include "lib/network/service/network/sub_uart.hpp"
 #include "src/service/service_example.hpp"
+#include "src/service/service_motor.hpp"
 
 NetworkService *network = &NetworkService::getInstance();
-Device *device = Global::getInstance().device;
-UartService *uart;
-
-ExampleService *exampleService;
 
 void setup()
 {
-
-  uart = new UartService(0, 115200);
+  Global::getInstance().device = new Device(0, 1, "uno");
+  UartService *uart = new UartService(0, 115200);
   uint8_t ch = ChannelManager::getInstance().add(uart);
-
-  RoutingTable::getInstance().add(new Route(ch, Device(3, 1, "raspberry")));
 
   network->monitorRoutes();
   network->monitorChannels();
 
-  exampleService = new ExampleService();
-  exampleService->service();
+  ExampleService *exampleService = new ExampleService();
+  MotorService *motorService = new MotorService();
 
-  // uart->write("data");
-  
+  motorService->service();
 }
 
 void loop()
