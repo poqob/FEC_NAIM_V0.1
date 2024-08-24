@@ -21,7 +21,7 @@ private: // constant
 
   MotorHardware *motorHardware;
   MotorHardware *motorHardware1;
-  MotorHardware motor;
+
 
 public:
   MotorService() : CommService(1, 1) // constant

@@ -1,77 +1,57 @@
-#include <stdint.h>
-
 #ifndef DISTANCE_SERVICE_HPP
 #define DISTANCE_SERVICE_HPP
+
+#include "../../lib/network/service/comm_service.hpp"
+#include "../../lib/network/service/network/service_network.hpp"
+#include "../../lib/network/global/global.hpp"
+#include "hardware/hardware_distance.hpp"
 
 #include "Arduino.h"
 #include "HardwareSerial.h"
 #include <WString.h>
+#include <stdint.h>
 
+/*
+ * @author: Haktan Serdar Genç
+ * @date: 24.08.24
+ * @file: distance service.
+ */
+class DistanceService : public CommService
+{
 
-class DistanceService {
+private: // constant
+  Package *p;
+  Device *device = Global::getInstance().device;
 
-private:
-  uint8_t trigPin;
-  uint8_t echoPin;
-  float distance;
-  long duration;
+  DistanceHardware *distanceHardware0;
+  DistanceHardware *distanceHardware1;
+  DistanceHardware *distanceHardware2;
+  DistanceHardware *distanceHardware3;
+  public:
+  DistanceService() : CommService(1, 2) // constant
+  {
+    GatewayService::getInstance().subscribeService(this);
+    DistanceHardware0 = new DistanceHardware(1,2); // pin tanımı şuanlık rastgele
+    DistanceHardware1 = new DistanceHardware(3,4);
+    DistanceHardware2 = new DistanceHardware(4,5);
+    DistanceHardware3 = new DistanceHardware(5,6);
 
-
-  unsigned long previousMillis = 0;  // Stores the last time the action was taken
-   int interval = 1000;        // Interval at which to repeat the action (milliseconds)
-  unsigned long triggerStartMillis = 0;
-  unsigned long triggerHighMillis = 0;
-  bool triggered = false;
-  bool measuring = false;
-public:
-
-
-  void setup() {
-    pinMode(this->trigPin, OUTPUT);
-    pinMode(this->echoPin, INPUT);
   }
+  void service() override
+  {
+    Package _package = Package::build(device->id, device->subnet, group, id, device->id, device->subnet, group, 0, DistanceHardware0->read());
+    p = new Package(_package.getContent());
+    NetworkService::getInstance().send(p);
+  };
 
+  void handle(Package *package) override
+  {
 
-   void service() {
-    unsigned long currentMillis = millis();
-    if (currentMillis - previousMillis >= interval) {
-      previousMillis = currentMillis;
-      // Start the trigger pulse
-      digitalWrite(trigPin, LOW);
-      triggerStartMillis = currentMillis;
-      triggered = true;
-      measuring = false;
-    }
+  };
 
-    if (triggered && (currentMillis - triggerStartMillis >= 5)) {
-      // Set the trigPin to HIGH for 10 microseconds
-      digitalWrite(trigPin, HIGH);
-      triggerHighMillis = currentMillis;
-      triggered = false;
-      measuring = true;
-    }
-
-    if (measuring && (currentMillis - triggerHighMillis >= 10)) {
-      // Set the trigPin back to LOW and start measuring
-      digitalWrite(trigPin, LOW);
-      measuring = false;
-
-      duration = pulseIn(echoPin, HIGH);
-      distance = (duration / 29.1) / 2;
-    }
-    Serial.print(trigPin);
-    Serial.print(":");
-    Serial.println(distance);
-  }
-
-  DistanceService(uint8_t trigPin, uint8_t echoPin) {
-    this->echoPin = echoPin;
-    this->trigPin = trigPin;
-  }
-
-  DistanceService(){}
+  void response(String data) override {};
 
   ~DistanceService() {}
-  //DistanceService& DistanceService::operator=(const DistanceService&);
 };
+
 #endif  // DISTANCE_SERVICE_HPP
