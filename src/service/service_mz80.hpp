@@ -29,10 +29,10 @@ class Mz80Service : public CommService
   DistanceService() : CommService(1, 3) // constant
   {
     GatewayService::getInstance().subscribeService(this);
-    Mz80Hardware0 = new DistanceHardware(9); // pin tanımı şuanlık rastgele
-    Mz80Hardware1 = new DistanceHardware(10);
-    Mz80Hardware2 = new DistanceHardware(11);
-    Mz80Hardware3 = new DistanceHardware(12);
+    Mz80Hardware0 = new Mz80Hardware(9); // pin tanımı şuanlık rastgele
+    Mz80Hardware1 = new Mz80Hardware(10);
+    Mz80Hardware2 = new Mz80Hardware(11);
+    Mz80Hardware3 = new Mz80Hardware(12);
 
   }
   void service() override
