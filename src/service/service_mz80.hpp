@@ -17,7 +17,7 @@
 
 class Mz80Service : public CommService
 {
-  private: // constant
+private: // constant
   Package *p;
   Device *device = Global::getInstance().device;
 
@@ -25,31 +25,31 @@ class Mz80Service : public CommService
   Mz80Hardware *mz80Hardware1;
   Mz80Hardware *mz80Hardware2;
   Mz80Hardware *mz80Hardware3;
-  public:
-  DistanceService() : CommService(1, 3) // constant
+
+public:
+  Mz80Service() : CommService(1, 4) // constant
   {
     GatewayService::getInstance().subscribeService(this);
-    Mz80Hardware0 = new Mz80Hardware(10); // pin tanımı şuanlık rastgele
-    Mz80Hardware1 = new Mz80Hardware(11);
-    Mz80Hardware2 = new Mz80Hardware(12);
-    Mz80Hardware3 = new Mz80Hardware(13);
-
+    mz80Hardware0 = new Mz80Hardware(12); // pin tanımı şuanlık rastgele
+    // mz80Hardware1 = new Mz80Hardware(11);
+    // mz80Hardware2 = new Mz80Hardware(12);
+    // mz80Hardware3 = new Mz80Hardware(13);
   }
   void service() override
   {
-    Package _package = Package::build(device->id, device->subnet, group, id, device->id, device->subnet, group, 0, Mz80Hardware0->read());
+    Package _package = Package::build(device->id, device->subnet, group, id, device->id, device->subnet, group, 0, mz80Hardware0->service());
     p = new Package(_package.getContent());
     NetworkService::getInstance().send(p);
+    delete p;
   };
 
-  void handle(Package *package) override
-  {
+  void handle(Package *package) override {
 
   };
 
   void response(String data) override {};
 
-  ~DistanceService() {}
+  ~Mz80Service() {}
 };
 
 #endif // MZ80_SERVICE_HPP

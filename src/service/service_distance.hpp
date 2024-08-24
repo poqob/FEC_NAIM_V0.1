@@ -27,25 +27,28 @@ private: // constant
   DistanceHardware *distanceHardware1;
   DistanceHardware *distanceHardware2;
   DistanceHardware *distanceHardware3;
-  public:
+
+public:
   DistanceService() : CommService(1, 2) // constant
   {
     GatewayService::getInstance().subscribeService(this);
-    DistanceHardware0 = new DistanceHardware(3,4); // pin tanımı şuanlık rastgele
-    DistanceHardware1 = new DistanceHardware(5,6);
-    DistanceHardware2 = new DistanceHardware(6,7);
-    DistanceHardware3 = new DistanceHardware(8,9);
-
+    distanceHardware0 = new DistanceHardware(3, 4); // pin tanımı şuanlık rastgele
+    distanceHardware1 = new DistanceHardware(5, 6);
+    // distanceHardware2 = new DistanceHardware(6, 7);
+    // distanceHardware3 = new DistanceHardware(8, 9);
   }
   void service() override
   {
-    Package _package = Package::build(device->id, device->subnet, group, id, device->id, device->subnet, group, 0, DistanceHardware0->read());
+    String data = distanceHardware0->service();
+    data.concat(";");
+    data.concat(distanceHardware1->service());
+
+    Package _package = Package::build(device->id, device->subnet, group, id, device->id, device->subnet, group, 0, data);
     p = new Package(_package.getContent());
     NetworkService::getInstance().send(p);
   };
 
-  void handle(Package *package) override
-  {
+  void handle(Package *package) override {
 
   };
 
@@ -54,4 +57,4 @@ private: // constant
   ~DistanceService() {}
 };
 
-#endif  // DISTANCE_SERVICE_HPP
+#endif // DISTANCE_SERVICE_HPP

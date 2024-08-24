@@ -10,6 +10,10 @@
 #include "src/service/service_mz80.hpp"
 
 NetworkService *network = &NetworkService::getInstance();
+DistanceService *distanceService;
+Mz80Service *mz80Service;
+ExampleService *exampleService;
+MotorService *motorService;
 
 void setup()
 {
@@ -17,16 +21,20 @@ void setup()
   UartService *uart = new UartService(0, 115200);
   uint8_t ch = ChannelManager::getInstance().add(uart);
 
-  network->monitorRoutes();
-  network->monitorChannels();
+  // network->monitorRoutes();
+  // network->monitorChannels();
 
-  ExampleService *exampleService = new ExampleService();
-  MotorService *motorService = new MotorService();
-  DistanceService *distanceService = new DistanceService();
-  Mz80Service *mz80Service = new Mz80Service();
+  exampleService = new ExampleService();
+  motorService = new MotorService();
+
+  distanceService = new DistanceService();
+  mz80Service = new Mz80Service();
 }
 
 void loop()
 {
+  delay(85);
+  // mz80Service->service();
+  distanceService->service(); // TODO:process
   NetworkService::getInstance().listen();
 }

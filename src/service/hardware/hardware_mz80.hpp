@@ -1,7 +1,7 @@
 #ifndef MZ80_HARDWARE_HPP
 #define MZ80_HARDWARE_HPP
 
-#include "../../../lib/network/service/hardware_service.hpp" 
+#include "../../../lib/network/service/hardware_service.hpp"
 #include "HardwareSerial.h"
 
 /*
@@ -9,37 +9,29 @@
  * @date: 24.08.24
  * @file: motor service.
  */
-class Mz80Hardware : public Mz80Service
+class Mz80Hardware : public HardwareService
 {
 private:
-  int value;
-  bool listen;
-  int pin;
-  bool engelvar;
+  uint8_t value = 255;
+  uint8_t pin;
 
- Mz80Hardware(int pin) 
-    : Mz80Service(), pin(pin), value(0), listen(false), engelvar(false) {}
-    
-  void setup()
+public:
+  String service()
   {
-    listen = false;
-    pinMode(pin, INPUT);
+    value = digitalRead(pin);
+    if (value == 1)
+      return "1";
+    else if (value == 0)
+      return "0";
+    else
+      return String(value);
   }
-  void mzkontrol()
+
+  Mz80Hardware(int pin)
+      : HardwareService(), pin(pin), value(0)
   {
-    value = digitalRead(pin); 
-    if (value == 1) {
-     engelvar = true;
-    }
-    else{
-     engelvar = false;
-    }
-    
+    pinMode(pin, INPUT_PULLUP); // TODO: INPUT_PULLUP
   }
-  Bool read()
-    {
-        return Bool (engelvar);
-    }
 
   ~Mz80Hardware() {}
 };

@@ -37,8 +37,9 @@ public:
         NetworkService::getInstance().send(p);
     };
 
-    void handle(Package *package) override {
-        // Serial.println("ExampleService::handle");
+    void handle(Package *package) override
+    {
+        Serial.println(package->getData());
     }; // Pure virtual function
 
     void response(String data) override {

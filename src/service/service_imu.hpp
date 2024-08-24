@@ -3,25 +3,24 @@
 #include "HardwareSerial.h"
 
 /*
-* @author: Mustafa BICER
-* @date: 17.07.24
-* @file: IMU service.
-*/
+ * @author: Mustafa BICER
+ * @date: 17.07.24
+ * @file: IMU service.
+ */
 
-class ImuService {
+class ImuService
+{
 
 public:
-
-  void setup() {
+  float velocity()
+  {
+    return 0.0;
   }
 
-  void service() {
+  ImuService()
+  {
   }
-
-  ImuService() {
-  }
-
 
   ~ImuService() {}
 };
-#endif  // IMU_SERVICE_HPP
+#endif // IMU_SERVICE_HPP

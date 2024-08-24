@@ -1,6 +1,7 @@
 #ifndef HARDWARE_SERVICE_HPP
 #define HARDWARE_SERVICE_HPP
 #include "a_service.hpp"
+#include "Arduino.h"
 #include <stdint.h>
 /*
  * @author: Mustafa BICER
