@@ -2,12 +2,10 @@
 #define MZ80_SERVICE_HPP
 
 #include "../../lib/network/service/comm_service.hpp"
-#include "../../lib/network/service/network/service_network.hpp"
+#include "../../lib/network/service_network.hpp"
 #include "../../lib/network/global/global.hpp"
-#include "hardware/hardware_mz80.hpp"
-
+#include "../model/hardware/hardware_mz80.hpp"
 #include <stdint.h>
-#include "Arduino.h"
 #include "HardwareSerial.h"
 /*
  * @author: Haktan Serdar Genç

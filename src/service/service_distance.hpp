@@ -1,12 +1,10 @@
-#ifndef DISTANCE_SERVICE_HPP
-#define DISTANCE_SERVICE_HPP
+#if !defined(SERVICE_DISTANCE_HPP)
+#define SERVICE_DISTANCE_HPP
 
 #include "../../lib/network/service/comm_service.hpp"
-#include "../../lib/network/service/network/service_network.hpp"
+#include "../../lib/network/service_network.hpp"
 #include "../../lib/network/global/global.hpp"
-#include "hardware/hardware_distance.hpp"
-
-#include "Arduino.h"
+#include "../model/hardware/hardware_distance.hpp"
 #include "HardwareSerial.h"
 #include <WString.h>
 #include <stdint.h>
@@ -16,6 +14,7 @@
  * @date: 24.08.24
  * @file: distance service.
  */
+
 class DistanceService : public CommService
 {
 
@@ -25,18 +24,15 @@ private: // constant
 
   DistanceHardware *distanceHardware0;
   DistanceHardware *distanceHardware1;
-  DistanceHardware *distanceHardware2;
-  DistanceHardware *distanceHardware3;
 
 public:
   DistanceService() : CommService(1, 2) // constant
   {
     GatewayService::getInstance().subscribeService(this);
-    distanceHardware0 = new DistanceHardware(3, 4); // pin tanımı şuanlık rastgele
+    distanceHardware0 = new DistanceHardware(3, 4);
     distanceHardware1 = new DistanceHardware(5, 6);
-    // distanceHardware2 = new DistanceHardware(6, 7);
-    // distanceHardware3 = new DistanceHardware(8, 9);
   }
+
   void service() override
   {
     String data = distanceHardware0->service();
@@ -46,15 +42,13 @@ public:
     Package _package = Package::build(device->id, device->subnet, group, id, device->id, device->subnet, group, 0, data);
     p = new Package(_package.getContent());
     NetworkService::getInstance().send(p);
-  };
+  }
 
-  void handle(Package *package) override {
+  void handle(Package *package) override {}
 
-  };
-
-  void response(String data) override {};
+  void response(String data) override {}
 
   ~DistanceService() {}
 };
 
-#endif // DISTANCE_SERVICE_HPP
+#endif // SERVICE_DISTANCE_HPP

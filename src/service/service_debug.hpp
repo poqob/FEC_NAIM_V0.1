@@ -1,18 +1,18 @@
 #ifndef EXAMPLE_SERVICE_HPP
 #define EXAMPLE_SERVICE_HPP
 #include "../../lib/network/service/comm_service.hpp"
-#include "../../lib/network/service/network/service_network.hpp"
+#include "../../lib/network/service_network.hpp"
 #include "../../lib/network/global/global.hpp"
 #include "HardwareSerial.h"
 
 /*
  * @author: Mustafa BICER
  * @date: 24.08.24
- * @file: example service.
- * @description: This is an example service. Transmits data to motor.
+ * @file: service_example.hpp
+ * @description: This is an example debug service. It sends and handles receiving packages.
  */
 
-class ExampleService : public CommService
+class DebugService : public CommService
 {
 
 private:
@@ -20,7 +20,7 @@ private:
     Device *device = Global::getInstance().device;
 
 public:
-    ExampleService() : CommService(1, 0)
+    DebugService() : CommService(1, 0)
     {
         GatewayService::getInstance().subscribeService(this);
     }
@@ -39,12 +39,12 @@ public:
 
     void handle(Package *package) override
     {
-        Serial.println(package->getData());
+        Serial.println(package->getContent());
     }; // Pure virtual function
 
     void response(String data) override {
     }; // Pure virtual function
 
-    ~ExampleService() {}
+    ~DebugService() {}
 };
-#endif // ExampleService
+#endif // DebugService

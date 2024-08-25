@@ -3,8 +3,8 @@
 #include "HardwareSerial.h"
 
 /*
- * @author: Mustafa BICER
- * @date: 17.07.24
+ * @author: Haktan Serdar GENC
+ * @date: 25.08.24
  * @file: IMU service.
  */
 

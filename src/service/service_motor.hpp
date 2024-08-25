@@ -3,7 +3,7 @@
 #include "../../lib/network/service/comm_service.hpp"
 #include "../../lib/network/service/network/service_network.hpp"
 #include "../../lib/network/global/global.hpp"
-#include "hardware/hardware_motor.hpp"
+#include "../model/hardware/hardware_motor.hpp"
 
 /*
  * @author: Mustafa BICER
@@ -21,7 +21,6 @@ private: // constant
 
   MotorHardware *motorHardware;
   MotorHardware *motorHardware1;
-
 
 public:
   MotorService() : CommService(1, 1) // constant

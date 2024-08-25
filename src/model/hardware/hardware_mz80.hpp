@@ -7,7 +7,7 @@
 /*
  * @author: Haktan Serdar Genç
  * @date: 24.08.24
- * @file: motor service.
+ * @file: mz80 service.
  */
 class Mz80Hardware : public HardwareService
 {
