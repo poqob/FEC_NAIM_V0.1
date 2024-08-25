@@ -2,6 +2,13 @@
 #include <ProcessScheduler.h>
 #include "service_motor.hpp"
 
+/*
+ * @author: Mustafa BICER
+ * @date: 25.08.24
+ * @file: process_motor.hpp
+ * @description: This is a motor process that handles network packages to the motor.
+ */
+
 class MotorProcess : public Process
 {
 private:

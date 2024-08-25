@@ -5,7 +5,8 @@
 /*
  * @author: Mustafa BICER
  * @date: 17.07.24
- * @file: lineer actuator service.
+ * @descpription: lineer actuator service.
+ * @file: process_lineer_motor.hpp
  */
 
 class LineerMotorProcess : public Process

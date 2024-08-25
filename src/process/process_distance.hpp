@@ -1,56 +1,53 @@
+#if !defined(PROCESS_DISTANCE_SENSOR)
+#define PROCESS_DISTANCE_SENSOR
+
+/*
+ * @author: Mustafa BICER
+ * @date: 25.08.24
+ * @file: process_distance.hpp
+ * @description: This is a distance HC-SR04~05 hardware reader process.
+ */
+
 #include "WString.h"
 #include "HardwareSerial.h"
 #include <ProcessScheduler.h>
-#include "service_distance.hpp"
+#include "../service/service_distance.hpp"
 
-class DistanceProcess : public Process {
+class DistanceProcess : public Process
+{
 
-public:
-DistanceService distanceService;
-DistanceService distanceService0;
-DistanceService distanceService1;
-DistanceService distanceService2;
+private:
+  DistanceService *dservice;
 
 public:
   // Call the Process constructor
   DistanceProcess(Scheduler &manager, ProcPriority pr, unsigned int period, int iterations)
-    : Process(manager, pr, period, iterations) {
-      this->distanceService= DistanceService(30,31); // trig echo
-      this->distanceService0= DistanceService(32,33);
-      this->distanceService1= DistanceService(34,35);
-      this->distanceService2= DistanceService(36,37);
+      : Process(manager, pr, period, iterations)
+  {
   }
 
-protected:
   // Create our service routine
-  virtual void service() {
-    this->force();
+  virtual void service()
+  {
+    dservice->service();
   }
 
-  virtual void setup() {
-    distanceService.setup();
-    distanceService0.setup();
-    distanceService1.setup();
-    distanceService2.setup();
+  virtual void setup()
+  {
+    dservice = new DistanceService();
   }
 
-  virtual void force() {
-    distanceService.service();
-    distanceService0.service();
-    distanceService1.service();
-    distanceService2.service();
+  virtual void force()
+  {
   }
 
-
- 
-
-  virtual void onEnable() {
+  virtual void onEnable()
+  {
   }
 
-  virtual void onDisable() {
+  virtual void onDisable()
+  {
   }
-
-  
 };
 
-// TODO: problem is we are not able to apply custom delay.
+#endif // PROCESS_DISTANCE_SENSOR
