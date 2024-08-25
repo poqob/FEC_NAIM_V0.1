@@ -6,13 +6,13 @@
 
 NetworkService *network = &NetworkService::getInstance();
 
-UartService *uart;
+Uart *uart;
 DumpService *ds;
 PmudService *ps;
 
 void networkSetup()
 {
-  uart = new UartService(0, 115200);
+  uart = new Uart(0, 115200);
   uint8_t ch = ChannelManager::getInstance().add(uart);
   RoutingTable::getInstance().add(new Route(ch, Device(3, 1, "raspberry")));
 

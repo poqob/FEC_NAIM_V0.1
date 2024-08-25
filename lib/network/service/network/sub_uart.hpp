@@ -11,7 +11,7 @@
  * @file: uart communication option.
  */
 
-class UartService : public Channel
+class Uart : public Channel
 {
 private:
   uint8_t whichUartDoIListen;
@@ -19,13 +19,13 @@ private:
   String name = "uart";
 
 public:
-  UartService(uint8_t tx, uint8_t rx, long baud)
+  Uart(uint8_t tx, uint8_t rx, long baud)
       : Channel()
   {
 
   } // manuel pin setup.
   // manuel serial setup.
-  UartService(uint8_t serial, long baud)
+  Uart(uint8_t serial, long baud)
       : Channel()
   {
 

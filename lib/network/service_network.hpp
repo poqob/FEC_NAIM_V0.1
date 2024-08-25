@@ -1,13 +1,13 @@
 #ifndef NETWORK_SERVICE_HPP
 #define NETWORK_SERVICE_HPP
 #include "HardwareSerial.h"
-#include "../../../network/global/global.hpp"
-#include "../../../network/service/a_service.hpp"
-#include "../../../network/model/package.hpp"
-#include "../../../network/model/routing_table.hpp"
-#include "sub_gateway.hpp"
-#include "sub_channel_manager.hpp"
-#include "sub_router.hpp"
+#include "../network/global/global.hpp"
+#include "../network/service/a_service.hpp"
+#include "../network/model/package.hpp"
+#include "../network/model/routing_table.hpp"
+#include "../network/service/network/sub_gateway.hpp"
+#include "../network/service/network/sub_channel_manager.hpp"
+#include "../network/service/network/sub_router.hpp"
 /*
  * @author: Mustafa BICER
  * @date: 20.08.24
