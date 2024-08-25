@@ -3,6 +3,7 @@
 #include "../../lib/network/service/comm_service.hpp"
 #include "../../lib/network/service_network.hpp"
 #include "../../lib/network/global/global.hpp"
+#include "../model/hardware/hardware_led.hpp"
 #include "HardwareSerial.h"
 
 /*
@@ -18,11 +19,22 @@ class DebugService : public CommService
 private:
     Package *p;
     Device *device = Global::getInstance().device;
+    LedHardware *led;
+
+    void (*callbackFunc)();
 
 public:
     DebugService(uint8_t group, uint8_t id) : CommService(group, id)
     {
         GatewayService::getInstance().subscribeService(this);
+        led = new LedHardware(13);
+    }
+
+    DebugService(uint8_t group, uint8_t id, void (*cb)()) : CommService(group, id)
+    {
+        GatewayService::getInstance().subscribeService(this);
+        led = new LedHardware(13);
+        callbackFunc = cb; // TODO: implement callback function
     }
 
     // create package, send the package
@@ -35,16 +47,28 @@ public:
         Package _package = Package::build(device->id, device->subnet, group, id, device->id, device->subnet, group, id, "datataa");
         p = new Package(_package.getContent());
         NetworkService::getInstance().send(p);
+        delete p;
     };
 
     void handle(Package *package) override
     {
+        if (package->fromService() == 4)
+        {
+            led->toggle();
+            Package _package = Package::build(device->id, device->subnet, group, id, 2, 1, group, id, "led toggled");
+            p = new Package(_package.getContent());
+            NetworkService::getInstance().send(p);
+            delete p;
+        }
         String result = "debug(group:";
         result.concat(this->group);
         result.concat(", id:");
         result.concat(this->id);
-        result.concat(") ");
-        result.concat(package->getContent());
+        result.concat(") package(head:");
+        result.concat(package->getHead());
+        result.concat(" , data:");
+        result.concat(package->getData());
+        result.concat(")");
         Serial.println(result);
     }; // Pure virtual function
 

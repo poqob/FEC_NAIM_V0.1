@@ -6,15 +6,15 @@
 Scheduler sched;
 
 NetworkProcess np(sched, HIGH_PRIORITY, 100, RUNTIME_FOREVER);
-DebugProcess dep(sched, MEDIUM_PRIORITY, 100, RUNTIME_FOREVER);
+DebugProcess dep(sched, MEDIUM_PRIORITY, 50, RUNTIME_FOREVER);
 MZ80DistanceProcess mp(sched, MEDIUM_PRIORITY, 50, RUNTIME_FOREVER);
-DistanceProcess dp(sched, HIGH_PRIORITY, 200, RUNTIME_FOREVER);
+DistanceProcess dp(sched, HIGH_PRIORITY, 150, RUNTIME_FOREVER);
 
 void setup()
 {
   np.add(true);
   dep.add(true);
-   mp.add(true);
+  mp.add(true);
   dp.add(true);
 }
 
