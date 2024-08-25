@@ -16,7 +16,8 @@
 class DebugProcess : public Process
 {
 private:
-    DebugService *exampleService;
+    DebugService *debugService;
+    DebugService *debugService0;
 
 public:
     // Call the Process constructor
@@ -31,7 +32,8 @@ protected:
 
     virtual void setup()
     {
-        exampleService = new DebugService();
+        debugService = new DebugService(1, 0);
+        debugService0 = new DebugService(2, 0);
     }
 
     virtual void force()

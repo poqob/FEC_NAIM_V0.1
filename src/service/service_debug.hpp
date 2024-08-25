@@ -20,7 +20,7 @@ private:
     Device *device = Global::getInstance().device;
 
 public:
-    DebugService() : CommService(1, 0)
+    DebugService(uint8_t group, uint8_t id) : CommService(group, id)
     {
         GatewayService::getInstance().subscribeService(this);
     }
@@ -39,7 +39,13 @@ public:
 
     void handle(Package *package) override
     {
-        Serial.println(package->getContent());
+        String result = "debug(group:";
+        result.concat(this->group);
+        result.concat(", id:");
+        result.concat(this->id);
+        result.concat(") ");
+        result.concat(package->getContent());
+        Serial.println(result);
     }; // Pure virtual function
 
     void response(String data) override {

@@ -35,7 +35,10 @@ public:
   }
   void service() override
   {
-    Package _package = Package::build(device->id, device->subnet, group, id, device->id, device->subnet, group, 0, mz80Hardware0->service());
+    String data = mz80Hardware0->service();
+    if (data == "1")
+      return;
+    Package _package = Package::build(device->id, device->subnet, group, id, device->id, device->subnet, group, 0, data);
     p = new Package(_package.getContent());
     NetworkService::getInstance().send(p);
     delete p;
