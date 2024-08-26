@@ -40,6 +40,7 @@ public:
       return;
     Package _package = Package::build(device->id, device->subnet, group, id, device->id, device->subnet, group, 0, data);
     p = new Package(_package.getContent());
+    Serial.println(p->getContent());
     NetworkService::getInstance().send(p);
     delete p;
   };

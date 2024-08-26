@@ -52,27 +52,29 @@ public:
 
     void handle(Package *package) override
     {
-        if (package->fromService() == 4)
+        if (package->fromService() == 1)
         {
             led->toggle();
-            Package _package = Package::build(device->id, device->subnet, group, id, 2, 1, group, id, "led toggled");
-            p = new Package(_package.getContent());
-            NetworkService::getInstance().send(p);
-            delete p;
+            response("OK");
         }
-        String result = "debug(group:";
-        result.concat(this->group);
-        result.concat(", id:");
-        result.concat(this->id);
-        result.concat(") package(head:");
-        result.concat(package->getHead());
-        result.concat(" , data:");
-        result.concat(package->getData());
-        result.concat(")");
-        Serial.println(result);
+        // String result = "debug(group:";
+        // result.concat(this->group);
+        // result.concat(", id:");
+        // result.concat(this->id);
+        // result.concat(") package(head:");
+        // result.concat(package->getHead());
+        // result.concat(" , data:");
+        // result.concat(package->getData());
+        // result.concat(")");
+        // Serial.println(result);
     }; // Pure virtual function
 
-    void response(String data) override {
+    void response(String data) override
+    {
+        Package _package = Package::build(device->id, device->subnet, group, id, 3, 1, group, id, data);
+        p = new Package(_package.getContent());
+        NetworkService::getInstance().send(p);
+        delete p;
     }; // Pure virtual function
 
     ~DebugService() {}
