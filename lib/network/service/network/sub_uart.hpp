@@ -13,6 +13,12 @@
 
 class Uart : public Channel
 {
+
+private:
+  // byte numChars = 32;
+  // char receivedChars[numChars];
+  // bool newData = false;
+
 private:
   uint8_t whichUartDoIListen;
   HardwareSerial *ser;
@@ -48,18 +54,46 @@ public:
     ser->begin(baud); // Initialize the selected serial port
   }
 
+  // HardwareSerial *ser= &Serial;
+  // String read() override
+  // {
+  //   String result = "";
+  //   // Check if there is data available to read
+  //   if (ser->available() > 0)
+  //   {
+  //     result = ser->readString();
+  //     // cclear buffer
+  //     if (result.length() < 5) // +1 end char exprassion.
+  //       return "";
+  //   }
+  //   return result;
+  // }
+
+  // optimum message: "  $ 0101" optimum buffer size: 10
+  // optimum message: "14characters" optimum buffer size: 16
+
   String read() override
   {
-    String result = "";
+    // Set a fixed buffer size and read limit
+    const int bufferSize = 16;
+    char buffer[bufferSize];
+    int bytesRead = 0;
+    memset(buffer, 0, sizeof(buffer));
     // Check if there is data available to read
     if (ser->available() > 0)
     {
-      result = ser->readString();
-      // cclear buffer
-      if (result.length() < 5) // +1 end char exprassion.
+      ser->setTimeout(100);
+      bytesRead = ser->readBytes(buffer, bufferSize - 1); // Read bytes into buffer
+
+      buffer[bytesRead] = '\0'; // Null-terminate the buffer
+
+      if (bytesRead < 5) // If too short, discard the data
+      {
         return "";
+      }
+      return String(buffer); // Convert buffer to String only if needed
     }
-    return result;
+    return "";
   }
 
   void write(String data) override

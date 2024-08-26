@@ -51,10 +51,10 @@ public:
     if (binary_expression.length() == 0)
     {
       String devices = content.substring(0, encoded_key_count);
+      if (devices.length() != 4)
+        return "00100000001000000010000000100000";
       for (int i = 0; i < devices.length(); i++)
-      {
         binary_expression += byteToBitString(devices[i]);
-      }
     }
     return binary_expression;
   }
