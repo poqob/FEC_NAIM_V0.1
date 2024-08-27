@@ -67,7 +67,7 @@ public:
 
         // Sonuçları formatlayıp döndür
         String result = "Weighted Average: " + String(weightedAverage);
-        return result;
+        return String(weightedAverage);
     }
 };
 #endif // QTR_HARDWARE_HPP

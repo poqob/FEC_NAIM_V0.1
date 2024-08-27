@@ -26,7 +26,7 @@ private: // constant
   DistanceHardware *distanceHardware1;
 
 public:
-  DistanceService() : CommService(1, 2) // constant
+  DistanceService() : CommService(1, 7) // constant
   {
     GatewayService::getInstance().subscribeService(this);
     distanceHardware0 = new DistanceHardware(3, 4);

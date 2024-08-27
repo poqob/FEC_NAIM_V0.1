@@ -21,7 +21,7 @@ private: // constant
   QtrHardware *qtrHardware1;
 
 public:
-  LoadService() : CommService(1, 7) // constant
+  LoadService() : CommService(1, 1) // constant
   {
     GatewayService::getInstance().subscribeService(this);
     qtrHardware1 = new QtrHardware(A1, A2, A3, A4, A5, A6, A7, A8)
