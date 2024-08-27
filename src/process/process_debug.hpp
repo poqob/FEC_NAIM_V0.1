@@ -12,6 +12,12 @@
 #include "HardwareSerial.h"
 #include <ProcessScheduler.h>
 #include "../service/service_debug.hpp"
+#include "../service/service_qtr.hpp"
+#include "../service/service_mz80.hpp"
+#include "../service/service_motor.hpp"
+#include "../service/service_load.hpp"
+#include "../service/service_lift.hpp"
+#include "../service/service_distance.hpp"
 
 class DebugProcess : public Process
 {

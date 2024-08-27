@@ -1,9 +1,10 @@
 #ifndef MOTOR_SERVICE_HPP
 #define MOTOR_SERVICE_HPP
 #include "../../lib/network/service/comm_service.hpp"
-#include "../../lib/network/service/network/service_network.hpp"
+#include "../../lib/network/service_network.hpp"
 #include "../../lib/network/global/global.hpp"
 #include "../model/hardware/hardware_motor.hpp"
+#include "WString.h"
 
 /*
  * @author: Haktan Serdar Genç
@@ -25,29 +26,27 @@ public:
   MotorService() : CommService(1, 3) // constant
   {
     GatewayService::getInstance().subscribeService(this);
-    motorHardware1 = new MotorHardware(10, 11, 12, 13, firstThreeInt); // pin tanimi şimdilik rastgele sırasıyla R_EN, RPWM, L_EN, LPWM, verilen hız değeri 3 karakter olmaz zorunda
-    motorHardware2 = new MotorHardware(14, 15, 16, 17, lastThreeInt);
+    motorHardware1 = new MotorHardware(10, 11, 12, 13); // pin tanimi şimdilik rastgele sırasıyla R_EN, RPWM, L_EN, LPWM, verilen hız değeri 3 karakter olmaz zorunda
+    motorHardware2 = new MotorHardware(14, 15, 16, 17);
   }
 
-  void service() override{};
+  void service() override {};
 
   void handle(Package *package) override
   {
+    receivedPackage = package;
+    String data = receivedPackage->getData();
+    int firstThreeInt = 0;
+    int lastThreeInt = 0;
 
-    void processAndPrintData(const std::string &data)
-    {
-      if (data.length() == 6)
-      {
-        std::string firstThree = data.substr(0, 3);
-        std::string lastThree = data.substr(3, 3);
-        int firstThreeInt = std::stoi(firstThree);
-        int lastThreeInt = std::stoi(lastThree);
-      }
-      receivedPackage = package;
-      std::string data = receivedPackage->getData();
-      processAndPrintData(data);
-    }
-  };
+    String firstThree = data.substring(0, 3);
+    String lastThree = data.substring(3, 3);
+    firstThreeInt = int(firstThreeInt);
+    lastThreeInt = int(lastThreeInt);
+
+    motorHardware1->motor(firstThreeInt);
+    motorHardware2->motor(lastThreeInt);
+  }
 
   void response(String data) override {};
 

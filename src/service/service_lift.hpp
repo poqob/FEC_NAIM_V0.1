@@ -1,7 +1,7 @@
 #ifndef LIFT_SERVICE_HPP
 #define LIFT_SERVICE_HPP
 #include "../../lib/network/service/comm_service.hpp"
-#include "../../lib/network/service/network/service_network.hpp"
+#include "../../lib/network/service_network.hpp"
 #include "../../lib/network/global/global.hpp"
 #include "../model/hardware/hardware_lift.hpp"
 
@@ -24,14 +24,20 @@ public:
     LiftService() : CommService(1, 5)
     {
         GatewayService::getInstance().subscribeService(this);
-        liftHardware1 = new LiftHardware(20, 21, 22, 23, lift_status);
+        liftHardware1 = new LiftHardware(20, 21, 22, 23);
     }
 
-    void service() override{};
+    void service() override {};
 
+    // TODO: String to bool.
     void handle(Package *package) override
     {
-        int lift_status = receivedPackage->getData();
+        String data = receivedPackage->getData();
+        data = data[0];
+        if (data == "1")
+            liftHardware1->lift(true);
+        else
+            liftHardware1->lift(false);
     };
 
     void response(String data) override {};

@@ -1,7 +1,7 @@
 #ifndef LOAD_SERVICE_HPP
 #define LOAD_SERVICE_HPP
 #include "../../lib/network/service/comm_service.hpp"
-#include "../../lib/network/service/network/service_network.hpp"
+#include "../../lib/network/service_network.hpp"
 #include "../../lib/network/global/global.hpp"
 #include "../model/hardware/hardware_load.hpp"
 
@@ -24,7 +24,7 @@ public:
   LoadService() : CommService(1, 4) // constant
   {
     GatewayService::getInstance().subscribeService(this);
-    loadHardware1 = new LoadHardware(30,31)
+    loadHardware1 = new LoadHardware(30, 31);
   }
 
   void service() override
@@ -34,8 +34,7 @@ public:
     NetworkService::getInstance().send(p);
   };
 
-  void handle(Package *package) override{};
-  
+  void handle(Package *package) override {};
 
   void response(String data) override {};
 

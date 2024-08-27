@@ -17,39 +17,38 @@ private:
     uint8_t REN;
     uint8_t LPWM;
     uint8_t LEN;
-    uint8_t Velocity;
+    int velocity;
+    int inverseVelocity;
 
 public:
-    String Motor()
-{
-    pinMode(RPWM, OUTPUT);  
-    pinMode(REN, OUTPUT);   
-    pinMode(LPWM, OUTPUT);  
-    pinMode(LEN, OUTPUT);   
-    
-    digitalWrite(REN, HIGH);
-    digitalWrite(LEN, HIGH);
-    
-    if (Velocity >= 0)
+    void motor(int velocity)
     {
-        analogWrite(RPWM, Velocity);
-        digitalWrite(REN, HIGH);
-        digitalWrite(LEN, HIGH);  
+        if (velocity >= 0)
+        {
+            analogWrite(RPWM, velocity);
+            digitalWrite(REN, HIGH);
+            digitalWrite(LEN, HIGH);
+        }
+        else
+        {
+            inverseVelocity = velocity * -1;
+            analogWrite(LPWM, inverseVelocity);
+            digitalWrite(REN, HIGH);
+            digitalWrite(LEN, HIGH);
+        }
     }
-    else
-    {
-        InverseVelocity = Velocity * -1;  
-        analogWrite(LPWM, InverseVelocity);  
-        digitalWrite(REN, HIGH);  
-        digitalWrite(LEN, HIGH);
-    }
-    
-    return "";  
-}
 
     ~MotorHardware() {}
-    MotorHardware(uint8_t RPWM, uint8_t REN, uint8_t LPWM, uint8_t LEN, uint8_t Velocity)
-        : HardwareService(), RPWM(RPWM), REN(REN), LPWM(LPWM), LEN(LEN), Veloctiy(Velocity)
+    MotorHardware(uint8_t RPWM, uint8_t REN, uint8_t LPWM, uint8_t LEN)
+        : HardwareService(), RPWM(RPWM), REN(REN), LPWM(LPWM), LEN(LEN)
+    {
+        pinMode(RPWM, OUTPUT);
+        pinMode(REN, OUTPUT);
+        pinMode(LPWM, OUTPUT);
+        pinMode(LEN, OUTPUT);
+        digitalWrite(REN, HIGH);
+        digitalWrite(LEN, HIGH);
+    }
 };
 
 #endif // MOTOR_HARDWARE_HPP
