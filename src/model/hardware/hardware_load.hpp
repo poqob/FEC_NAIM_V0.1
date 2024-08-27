@@ -51,7 +51,7 @@ public:
 
         long value = readHX711();
         float weight = (value - offset) / scale;
-        return "";
+        return "weight";
     }
     
     ~LoadHardware() {}

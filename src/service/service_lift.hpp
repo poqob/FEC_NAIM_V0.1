@@ -27,12 +27,7 @@ public:
         liftHardware1 = new LiftHardware(20, 21, 22, 23, lift_status);
     }
 
-    void service() override
-    {
-        Package _package = Package::build(device->id, device->subnet, group, id, device->id, device->subnet, group, 0, liftHardware->read());
-        p = new Package(_package.getContent());
-        NetworkService::getInstance().send(p);
-    };
+    void service() override{};
 
     void handle(Package *package) override
     {

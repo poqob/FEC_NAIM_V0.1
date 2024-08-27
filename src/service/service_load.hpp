@@ -29,7 +29,7 @@ public:
 
   void service() override
   {
-    Package _package = Package::build(device->id, device->subnet, group, id, device->id, device->subnet, group, 0, loadHardware1->read());
+    Package _package = Package::build(device->id, device->subnet, group, id, device->id, device->subnet, group, 0, loadHardware1->Load());
     p = new Package(_package.getContent());
     NetworkService::getInstance().send(p);
   };

@@ -31,7 +31,15 @@ private:
     int sensor7Value;
     int sensor8Value;
 
+    // Ağırlıklar (bu örnekte 1'den 8'e kadar sıralı)
+    int weights[8] = {1, 2, 3, 4, 5, 6, 7, 8};
+
 public:
+    QtrHardware(int sensor1Pin, int sensor2Pin, int sensor3Pin, int sensor4Pin, int sensor5Pin, int sensor6Pin, int sensor7Pin, int sensor8Pin)
+        : HardwareService(), sensor1Pin(sensor1Pin), sensor2Pin(sensor2Pin), sensor3Pin(sensor3Pin), sensor4Pin(sensor4Pin), sensor5Pin(sensor5Pin), sensor6Pin(sensor6Pin), sensor7Pin(sensor7Pin), sensor8Pin(sensor8Pin) {}
+
+    ~QtrHardware() {}
+
     String Qtr()
     {
         sensor1Value = analogRead(sensor1Pin);
@@ -42,11 +50,24 @@ public:
         sensor6Value = analogRead(sensor6Pin);
         sensor7Value = analogRead(sensor7Pin);
         sensor8Value = analogRead(sensor8Pin);
-    }
-    
-    ~QtrHardware() {}
-    QtrHardware(int sensor1Pin, int sensor2Pin, int sensor3Pin, int sensor4Pin, int sensor5Pin, int sensor6Pin, int sensor7Pin, int sensor8Pin)
-        : HardwareService(), sensor1Pin(sensor1Pin), sensor2Pin(sensor2Pin), sensor3Pin(sensor3Pin), sensor4Pin(sensor4Pin), sensor5Pin(sensor5Pin), sensor6Pin(sensor6Pin), sensor6Pin(sensor6Pin), sensor7Pin(sensor7Pin)
-};
 
+        // Sensor değerlerini bir diziye koy
+        int sensorValues[8] = {sensor1Value, sensor2Value, sensor3Value, sensor4Value, sensor5Value, sensor6Value, sensor7Value, sensor8Value};
+
+        // Ağırlıklı toplamı hesapla
+        long weightedSum = 0;
+        int totalWeights = 0;
+        for (int i = 0; i < 8; ++i) {
+            weightedSum += sensorValues[i] * weights[i];
+            totalWeights += weights[i];
+        }
+
+        // Ağırlıklı ortalamayı hesapla
+        float weightedAverage = (float)weightedSum / totalWeights;
+
+        // Sonuçları formatlayıp döndür
+        String result = "Weighted Average: " + String(weightedAverage);
+        return result;
+    }
+};
 #endif // QTR_HARDWARE_HPP
