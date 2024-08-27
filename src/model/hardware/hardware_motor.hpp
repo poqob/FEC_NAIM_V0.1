@@ -5,39 +5,51 @@
 #include "HardwareSerial.h"
 
 /*
- * @author: Mustafa BICER
+ * @author: Haktan Serdar Genç
  * @date: 24.08.24
- * @file: motor service.
- * @description: This is an example service for motor. A service that transmits data to motor.
+ * @file: motor hardware.
  */
 
 class MotorHardware : public HardwareService
 {
 private:
-    String name;
+    uint8_t RPWM;
+    uint8_t REN;
+    uint8_t LPWM;
+    uint8_t LEN;
+    uint8_t Velocity;
 
 public:
-    // Constructor with name parameter
-    MotorHardware(String i) : HardwareService(), name(i) {}
-
-    // Function to send service data to the motor
-    void service(String data)
+    String Motor()
+{
+    pinMode(RPWM, OUTPUT);  
+    pinMode(REN, OUTPUT);   
+    pinMode(LPWM, OUTPUT);  
+    pinMode(LEN, OUTPUT);   
+    
+    digitalWrite(REN, HIGH);
+    digitalWrite(LEN, HIGH);
+    
+    if (Velocity >= 0)
     {
-        Serial.print("Motor Hardware ");
-        Serial.print(name + " ");
-        Serial.println(data);
+        analogWrite(RPWM, Velocity);
+        digitalWrite(REN, HIGH);
+        digitalWrite(LEN, HIGH);  
     }
-
-    String read()
+    else
     {
-        return "motor " + name + " dataread()";
+        InverseVelocity = Velocity * -1;  
+        analogWrite(LPWM, InverseVelocity);  
+        digitalWrite(REN, HIGH);  
+        digitalWrite(LEN, HIGH);
     }
+    
+    return "";  
+}
 
-    // Setup function
-    void setup() {}
-
-    // Destructor
     ~MotorHardware() {}
+    MotorHardware(uint8_t RPWM, uint8_t REN, uint8_t LPWM, uint8_t LEN, uint8_t Velocity)
+        : HardwareService(), RPWM(RPWM), REN(REN), LPWM(LPWM), LEN(LEN), Veloctiy(Velocity)
 };
 
 #endif // MOTOR_HARDWARE_HPP

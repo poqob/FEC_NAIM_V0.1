@@ -6,10 +6,9 @@
 #include "../model/hardware/hardware_motor.hpp"
 
 /*
- * @author: Mustafa BICER
- * @date: 24.08.24
+ * @author: Haktan Serdar Genç
+ * @date: 27.08.24
  * @file: motor service.
- * @description: This is an example service for motor. A service that transmits data to motor.
  */
 
 class MotorService : public CommService
@@ -19,28 +18,35 @@ private: // constant
   Package *p;
   Device *device = Global::getInstance().device;
 
-  MotorHardware *motorHardware;
   MotorHardware *motorHardware1;
+  MotorHardware *motorHardware2;
 
 public:
   MotorService() : CommService(1, 1) // constant
   {
     GatewayService::getInstance().subscribeService(this);
-    motorHardware = new MotorHardware("1"); // pin tanimi
-    motorHardware1 = new MotorHardware("2");
+    motorHardware1 = new MotorHardware(10, 11, 12, 13, firstThreeInt); // pin tanimi şimdilik rastgele sırasıyla R_EN, RPWM, L_EN, LPWM, verilen hız değeri 3 karakter olmaz zorunda
+    motorHardware2 = new MotorHardware(14, 15, 16, 17, lastThreeInt);
   }
 
-  void service() override
-  {
-    Package _package = Package::build(device->id, device->subnet, group, id, device->id, device->subnet, group, 0, motorHardware1->read());
-    p = new Package(_package.getContent());
-    NetworkService::getInstance().send(p);
-  };
+  void service() override{};
 
   void handle(Package *package) override
   {
-    receivedPackage = package;
-    Serial.println(receivedPackage->getData());
+
+    void processAndPrintData(const std::string &data)
+    {
+      if (data.length() == 6)
+      {
+        std::string firstThree = data.substr(0, 3);
+        std::string lastThree = data.substr(3, 3);
+        int firstThreeInt = std::stoi(firstThree);
+        int lastThreeInt = std::stoi(lastThree);
+      }
+      receivedPackage = package;
+      std::string data = receivedPackage->getData();
+      processAndPrintData(data);
+    }
   };
 
   void response(String data) override {};
