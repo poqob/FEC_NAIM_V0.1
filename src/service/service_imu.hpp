@@ -1,26 +1,40 @@
 #ifndef IMU_SERVICE_HPP
 #define IMU_SERVICE_HPP
-#include "HardwareSerial.h"
 
+#include "../../lib/network/service/comm_service.hpp"
+#include "../../lib/network/service_network.hpp"
+#include "../../lib/network/global/global.hpp"
+#include "../model/hardware/hardware_imu.hpp"
+#include "HardwareSerial.h"
 /*
- * @author: Haktan Serdar GENC
- * @date: 25.08.24
- * @file: IMU service.
+ * @author: Haktan Serdar Genç
+ * @date: 28.07.24
+ * @file: imu  service.
  */
 
-class ImuService
+class ImuService : public CommService
 {
+private: // constant
+  Package *p;
+  Device *device = Global::getInstance().device;
+
+  ImuHardware *imuHardware0;
 
 public:
-  float velocity()
+  ImuService() : CommService(1, 6) // constant
   {
-    return 0.0;
+    GatewayService::getInstance().subscribeService(this);
+    imuHardware0 = new ImuHardware(); // pin tanımı şuanlık rastgele
   }
+  void service() override {};
 
-  ImuService()
-  {
-  }
+  void handle(Package *package) override {
+
+  };
+
+  void response(String data) override {};
 
   ~ImuService() {}
 };
+
 #endif // IMU_SERVICE_HPP
