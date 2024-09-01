@@ -21,7 +21,7 @@ private: // constant
   LoadHardware *loadHardware1;
 
 public:
-  LoadService() : CommService(1, 4) // constant
+  LoadService(uint8_t group, uint8_t id) : CommService(group, id)
   {
     GatewayService::getInstance().subscribeService(this);
     loadHardware1 = new LoadHardware(30, 31);

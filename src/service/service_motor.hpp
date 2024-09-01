@@ -23,7 +23,7 @@ private: // constant
   MotorHardware *motorHardware2;
 
 public:
-  MotorService() : CommService(1, 3) // constant
+  MotorService() : CommService(1, 1) // constant
   {
     GatewayService::getInstance().subscribeService(this);
     motorHardware1 = new MotorHardware(10, 11, 12, 13); // pin tanimi şimdilik rastgele sırasıyla R_EN, RPWM, L_EN, LPWM, verilen hız değeri 3 karakter olmaz zorunda

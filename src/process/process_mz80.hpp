@@ -25,14 +25,12 @@ protected:
 
   virtual void setup()
   {
-    service_mz80 = new Mz80Service();
+    service_mz80 = new Mz80Service(0, 2);
   }
 
   virtual void onEnable() {}
 
   virtual void onDisable() {}
 };
-
-// TODO: problem is we are not able to apply custom delay.
 
 #endif // PROCESS_MZ80_HPP

@@ -1,18 +1,18 @@
 #include "Arduino.h"
 #include <ProcessScheduler.h>
-#include "service_lineer_motor.hpp"
+#include "../../src/service/service_lift.hpp"
 
 /*
  * @author: Mustafa BICER
- * @date: 17.07.24
- * @descpription: lineer actuator service.
- * @file: process_lineer_motor.hpp
+ * @date: 01.09.24
+ * @descpription: lift management process.
+ * @file: process_lift.hpp
  */
 
-class LineerMotorProcess : public Process
+class LiftProcess : public Process
 {
 private:
-  LineerMotorService *lineerMotorService = LineerMotorService::getInstance();
+  LiftService *liftService = LiftService(2, 1);
 
 public:
   // Call the Process constructor

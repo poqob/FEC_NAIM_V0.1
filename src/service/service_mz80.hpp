@@ -25,7 +25,7 @@ private: // constant
   Mz80Hardware *mz80Hardware3;
 
 public:
-  Mz80Service() : CommService(1, 2) // constant
+  Mz80Service(uint8_t group, uint8_t id) : CommService(group, id)
   {
     GatewayService::getInstance().subscribeService(this);
     mz80Hardware0 = new Mz80Hardware(12); // pin tanımı şuanlık rastgele

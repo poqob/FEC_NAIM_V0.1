@@ -21,12 +21,12 @@ class DistanceService : public CommService
 private: // constant
   Package *p;
   Device *device = Global::getInstance().device;
-
   DistanceHardware *distanceHardware0;
   DistanceHardware *distanceHardware1;
+  Device target = Device(3, 1, "raspberry");
 
 public:
-  DistanceService() : CommService(1, 7) // constant
+  DistanceService(uint8_t group, uint8_t id) : CommService(group, id)
   {
     GatewayService::getInstance().subscribeService(this);
     distanceHardware0 = new DistanceHardware(3, 4);

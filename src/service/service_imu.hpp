@@ -21,7 +21,7 @@ private: // constant
   ImuHardware *imuHardware0;
 
 public:
-  ImuService() : CommService(1, 6) // constant
+  ImuService(uint8_t group, uint8_t id) : CommService(group, id)
   {
     GatewayService::getInstance().subscribeService(this);
     imuHardware0 = new ImuHardware(); // pin tanımı şuanlık rastgele

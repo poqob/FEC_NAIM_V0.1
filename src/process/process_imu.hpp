@@ -11,10 +11,13 @@
 #include "WString.h"
 #include "HardwareSerial.h"
 #include <ProcessScheduler.h>
-#include "service_imu.hpp"
+#include "../../src/service/service_imu.hpp"
 
 class IMUProcess : public Process
 {
+private:
+  ImuService *imuService = ImuService(1, 2);
+
 public:
   // Call the Process constructor
   IMUProcess(Scheduler &manager, ProcPriority pr, unsigned int period, int iterations)
@@ -24,6 +27,7 @@ protected:
   // Create our service routine
   virtual void service()
   {
+    imuService->service(); //  run imu service
   }
 
   virtual void setup()

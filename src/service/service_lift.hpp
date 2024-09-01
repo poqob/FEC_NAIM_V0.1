@@ -21,7 +21,7 @@ private:
     LiftHardware *liftHardware1;
 
 public:
-    LiftService() : CommService(1, 5)
+    LiftService(uint8_t group, uint8_t id) : CommService(group, id)
     {
         GatewayService::getInstance().subscribeService(this);
         liftHardware1 = new LiftHardware(20, 21, 22, 23);
