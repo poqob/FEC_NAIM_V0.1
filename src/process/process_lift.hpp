@@ -12,11 +12,11 @@
 class LiftProcess : public Process
 {
 private:
-  LiftService *liftService = LiftService(2, 1);
+  LiftService *liftService;
 
 public:
   // Call the Process constructor
-  LineerMotorProcess(Scheduler &manager, ProcPriority pr, unsigned int period, int iterations)
+  LiftProcess(Scheduler &manager, ProcPriority pr, unsigned int period, int iterations)
       : Process(manager, pr, period, iterations)
   {
   }
@@ -24,12 +24,12 @@ public:
 protected:
   virtual void service()
   {
-    lineerMotorService->service(); //  run motor service
+    liftService->service(); //  run motor service
   }
 
   virtual void setup()
   {
-    lineerMotorService->setup();
+    liftService = new LiftService(2, 1);
   }
 
   virtual void onEnable()
@@ -40,7 +40,3 @@ protected:
   {
   }
 };
-
-/*
-packet:  {"host":"raspberry","sender":"line-opt","service":1,"data":"1"} data=1 ~ 0
-*/

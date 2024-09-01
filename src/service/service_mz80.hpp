@@ -35,14 +35,16 @@ public:
   }
   void service() override
   {
-    String data = mz80Hardware0->service();
-    if (data == "1")
-      return;
-    Package _package = Package::build(device->id, device->subnet, group, id, device->id, device->subnet, group, 0, data);
-    p = new Package(_package.getContent());
-    Serial.println(p->getContent());
-    NetworkService::getInstance().send(p);
-    delete p;
+    // String data = mz80Hardware0->service();
+    // if (data == "1")
+    //   return;
+    // Package _package = Package::build(device->id, device->subnet, group, id, device->id, device->subnet, group, 0, data);
+    // p = new Package(_package.getContent());
+    // Serial.println(p->getContent());
+    // NetworkService::getInstance().send(p);
+    // delete p;
+
+    sendDumpData();
   };
 
   void handle(Package *package) override {
@@ -50,6 +52,15 @@ public:
   };
 
   void response(String data) override {};
+
+  void sendDumpData()
+  {
+    String virtualData = "0;1;0;1;0;1";
+    Package _package0 = Package::build(device->id, device->subnet, group, id, 2, 2, group, id, virtualData);
+    p = new Package(_package0.getContent());
+    NetworkService::getInstance().send(p);
+    delete p;
+  }
 
   ~Mz80Service() {}
 };

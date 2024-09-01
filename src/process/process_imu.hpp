@@ -16,7 +16,7 @@
 class IMUProcess : public Process
 {
 private:
-  ImuService *imuService = ImuService(1, 2);
+  ImuService *imuService;
 
 public:
   // Call the Process constructor
@@ -32,6 +32,7 @@ protected:
 
   virtual void setup()
   {
+    imuService = new ImuService(1, 2);
   }
 
   virtual void force()

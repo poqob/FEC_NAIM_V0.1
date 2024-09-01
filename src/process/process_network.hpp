@@ -38,7 +38,7 @@ protected:
     Uart *uart = new Uart(0, 115200);
     uint8_t ch = ChannelManager::getInstance().add(uart);
 
-    RoutingTable::getInstance().add(new Route(ch, Device(2, 1, "raspberry")));
+    RoutingTable::getInstance().add(new Route(ch, Device(2, 2, "raspberry")));
     RoutingTable::getInstance().add(new Route(ch, Device(3, 1, "esp32")));
   }
 

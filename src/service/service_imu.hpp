@@ -26,13 +26,25 @@ public:
     GatewayService::getInstance().subscribeService(this);
     imuHardware0 = new ImuHardware(); // pin tanımı şuanlık rastgele
   }
-  void service() override {};
-
-  void handle(Package *package) override {
-
+  void service() override
+  {
+    sendDumpData();
   };
 
-  void response(String data) override {};
+  void handle(Package *package) override
+  {
+  }
+
+  void response(String data) override {}
+
+  void sendDumpData()
+  {
+    String virtualData = "angle;velocity;accelaration";
+    Package _package0 = Package::build(device->id, device->subnet, group, id, 2, 2, group, id, virtualData);
+    p = new Package(_package0.getContent());
+    NetworkService::getInstance().send(p);
+    delete p;
+  }
 
   ~ImuService() {}
 };

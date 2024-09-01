@@ -30,7 +30,10 @@ public:
     motorHardware2 = new MotorHardware(14, 15, 16, 17);
   }
 
-  void service() override {};
+  void service() override
+  {
+    sendDumpData();
+  };
 
   void handle(Package *package) override
   {
@@ -49,6 +52,15 @@ public:
   }
 
   void response(String data) override {};
+
+  void sendDumpData()
+  {
+    String virtualData = "255;255";
+    Package _package0 = Package::build(device->id, device->subnet, group, id, 2, 2, group, id, virtualData);
+    p = new Package(_package0.getContent());
+    NetworkService::getInstance().send(p);
+    delete p;
+  }
 
   ~MotorService() {}
 };

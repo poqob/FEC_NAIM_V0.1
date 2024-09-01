@@ -35,23 +35,31 @@ public:
 
   void service() override
   {
-    String data = distanceHardware0->service();
-    data.concat(";");
-    data.concat(distanceHardware1->service());
+    // String data = distanceHardware0->service();
+    // data.concat(";");
+    // data.concat(distanceHardware1->service());
 
-    Package _package = Package::build(device->id, device->subnet, group, id, device->id, device->subnet, group, 0, data); // debug service.
-    Package _package0 = Package::build(device->id, device->subnet, group, id, 3, 1, 1, 1, data);
-    p = new Package(_package.getContent());
-    NetworkService::getInstance().send(p);
-    delete p;
-    p = new Package(_package0.getContent());
-    NetworkService::getInstance().send(p);
-    delete p;
+    // Package _package = Package::build(device->id, device->subnet, group, id, device->id, device->subnet, group, 0, data); // debug service.
+
+    // p = new Package(_package.getContent());
+    // NetworkService::getInstance().send(p);
+    // delete p;
+
+    sendDumpData();
   }
 
   void handle(Package *package) override {}
 
   void response(String data) override {}
+
+  void sendDumpData()
+  {
+    String virtualData = "000;111;222;333;444;555;666;777;888";
+    Package _package0 = Package::build(device->id, device->subnet, group, id, 2, 2, group, id, virtualData);
+    p = new Package(_package0.getContent());
+    NetworkService::getInstance().send(p);
+    delete p;
+  }
 
   ~DistanceService() {}
 };

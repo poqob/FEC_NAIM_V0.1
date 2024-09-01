@@ -17,7 +17,6 @@ class LiftService : public CommService
 private:
     Package *p;
     Device *device = Global::getInstance().device;
-
     LiftHardware *liftHardware1;
 
 public:
@@ -27,9 +26,12 @@ public:
         liftHardware1 = new LiftHardware(20, 21, 22, 23);
     }
 
-    void service() override {};
+    void service() override
+    {
+        sendDumpData(); // ACTUALLY NO NEED TO BROADCAST ANY PACKAGE.
+        // only receives on of packages.
+    };
 
-    // TODO: String to bool.
     void handle(Package *package) override
     {
         String data = receivedPackage->getData();
@@ -40,7 +42,16 @@ public:
             liftHardware1->lift(false);
     };
 
-    void response(String data) override {};
+    void response(String data) override {}
+
+    void sendDumpData()
+    {
+        String virtualData = "1";
+        Package _package0 = Package::build(device->id, device->subnet, group, id, 2, 2, group, id, virtualData);
+        p = new Package(_package0.getContent());
+        NetworkService::getInstance().send(p);
+        delete p;
+    }
 
     ~LiftService() {}
 };

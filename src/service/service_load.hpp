@@ -29,14 +29,21 @@ public:
 
   void service() override
   {
-    Package _package = Package::build(device->id, device->subnet, group, id, device->id, device->subnet, group, 0, loadHardware1->Load());
-    p = new Package(_package.getContent());
-    NetworkService::getInstance().send(p);
+    sendDumpData();
   };
 
   void handle(Package *package) override {};
 
   void response(String data) override {};
+
+  void sendDumpData()
+  {
+    String virtualData = "weight";
+    Package _package0 = Package::build(device->id, device->subnet, group, id, 2, 2, group, id, virtualData);
+    p = new Package(_package0.getContent());
+    NetworkService::getInstance().send(p);
+    delete p;
+  }
 
   ~LoadService() {}
 };

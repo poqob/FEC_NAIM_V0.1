@@ -2,20 +2,32 @@
 #include "src/process/process_debug.hpp"
 #include "src/process/process_mz80.hpp"
 #include "src/process/process_distance.hpp"
+#include "src/process/process_load.hpp"
+#include "src/process/process_imu.hpp"
+#include "src/process/process_lift.hpp"
+#include "src/process/process_qtr8.hpp"
 
 Scheduler sched;
 
-NetworkProcess np(sched, HIGH_PRIORITY, 50, RUNTIME_FOREVER);
-DebugProcess dep(sched, MEDIUM_PRIORITY, 50, RUNTIME_FOREVER);
-MZ80DistanceProcess mp(sched, MEDIUM_PRIORITY, 50, RUNTIME_FOREVER);
-DistanceProcess dp(sched, HIGH_PRIORITY, 80, RUNTIME_FOREVER);
+NetworkProcess pnetwork(sched, HIGH_PRIORITY, 80, RUNTIME_FOREVER);
+DebugProcess pdebug(sched, MEDIUM_PRIORITY, 50, RUNTIME_FOREVER);
+MZ80DistanceProcess pmz(sched, HIGH_PRIORITY, 220, RUNTIME_FOREVER);
+DistanceProcess pdistance(sched, HIGH_PRIORITY, 110, RUNTIME_FOREVER);
+LoadProcess pload(sched, HIGH_PRIORITY, 180, RUNTIME_FOREVER);
+IMUProcess pimu(sched, HIGH_PRIORITY, 100, RUNTIME_FOREVER);
+LiftProcess plift(sched, HIGH_PRIORITY, 130, RUNTIME_FOREVER);
+QTR8Process pqtr8(sched, HIGH_PRIORITY, 150, RUNTIME_FOREVER);
 
 void setup()
 {
-  np.add(true);
-  dep.add(true);
-  // mp.add(true);
-  // dp.add(true);
+  pnetwork.add(true);
+  pdebug.add(true);
+  pmz.add(true);
+  pdistance.add(true);
+  pload.add(true);
+  pimu.add(true);
+  plift.add(true);
+  pqtr8.add(true);
 }
 
 void loop()

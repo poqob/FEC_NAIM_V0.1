@@ -34,7 +34,7 @@ public:
 
   virtual void setup()
   {
-    dservice = new DistanceService(0, 1);
+    dservice = new DistanceService(3, 1);
   }
 
   virtual void force()

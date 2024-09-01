@@ -25,7 +25,7 @@ protected:
 
   virtual void setup()
   {
-    service_mz80 = new Mz80Service(0, 2);
+    service_mz80 = new Mz80Service(3, 2);
   }
 
   virtual void onEnable() {}

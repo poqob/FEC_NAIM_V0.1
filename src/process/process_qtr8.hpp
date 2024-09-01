@@ -25,7 +25,7 @@ protected:
 
     virtual void setup()
     {
-        service_qtr8 = new ServiceQtr(0, 3);
+        service_qtr8 = new ServiceQtr(3, 3);
     }
 
     virtual void onEnable() {}

@@ -12,7 +12,7 @@
 class LoadProcess : public Process
 {
 private:
-    LoadService *loadService = LoadService(2, 2);
+    LoadService *loadService;
 
 public:
     // Call the Process constructor
@@ -29,7 +29,7 @@ protected:
 
     virtual void setup()
     {
-        loadService->setup();
+        loadService = new LoadService(2, 2);
     }
 
     virtual void onEnable()
