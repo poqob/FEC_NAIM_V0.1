@@ -38,7 +38,7 @@ protected:
 
     virtual void setup()
     {
-        debugService = new DebugService(1, 0);
+        // debugService = new DebugService(1, 0);
         debugService0 = new DebugService(2, 0);
     }
 
