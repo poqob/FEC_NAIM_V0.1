@@ -38,25 +38,15 @@ public:
     }
 
     // create package, send the package
-    void service() override
-    {
-        int data = 0;
-        String data0 = "haktan";
-        data0.concat(data);
+    void service() override {
 
-        Package _package = Package::build(device->id, device->subnet, group, id, device->id, device->subnet, group, id, "datataa");
-        p = new Package(_package.getContent());
-        NetworkService::getInstance().send(p);
-        delete p;
     };
 
     void handle(Package *package) override
     {
         if (package->from() == 2)
         {
-            // Serial.print("debug service received: ");
-            // Serial.println(package->getContent());
-            response("response:{:" + package->getData() + "}");
+            Serial.println(package->getData());
         }
     }; // Pure virtual function
 

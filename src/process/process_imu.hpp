@@ -21,7 +21,10 @@ private:
 public:
   // Call the Process constructor
   IMUProcess(Scheduler &manager, ProcPriority pr, unsigned int period, int iterations)
-      : Process(manager, pr, period, iterations) {}
+      : Process(manager, pr, period, iterations)
+  {
+    imuService = new ImuService(1, 2);
+  }
 
 protected:
   // Create our service routine
@@ -32,7 +35,7 @@ protected:
 
   virtual void setup()
   {
-    imuService = new ImuService(1, 2);
+    // imuService->setup();
   }
 
   virtual void force()

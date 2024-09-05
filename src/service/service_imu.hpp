@@ -28,8 +28,14 @@ public:
   }
   void service() override
   {
-    sendDumpData();
+    // sendDumpData();
+    imuHardware0->service();
   };
+
+  void setup()
+  {
+    imuHardware0->setup();
+  }
 
   void handle(Package *package) override
   {

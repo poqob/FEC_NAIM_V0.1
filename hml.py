@@ -1,5 +1,7 @@
 import os
 
+file_count: int = 0
+
 
 def count_lines_in_file(file_path):
     """Counts the number of non-empty lines in a file."""
@@ -10,12 +12,13 @@ def count_lines_in_file(file_path):
 
 
 def scan_folder_for_code_lines(folder_path):
-    """Scans the folder and its subfolders for .hpp and .ino files and counts total lines."""
     total_lines = 0
-    file_types = (".hpp", ".ino")  # Files to search for
+    file_types = (".hpp", ".ino", ".cpp")  # Files to search for
+    global file_count
     for root, dirs, files in os.walk(folder_path):
         for file in files:
             if file.endswith(file_types):
+                file_count += 1
                 file_path = os.path.join(root, file)
                 lines_in_file = count_lines_in_file(file_path)
                 total_lines += lines_in_file
@@ -26,4 +29,5 @@ def scan_folder_for_code_lines(folder_path):
 if __name__ == "__main__":
     folder_path = "./"
     total_lines = scan_folder_for_code_lines(folder_path)
-    print(f"Total lines of code in .hpp and .ino files: {total_lines}")
+    print(f"Total lines of code in .py and .conf files: {total_lines}")
+    print(f"Total file count: {file_count}")

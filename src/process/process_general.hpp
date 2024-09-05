@@ -3,27 +3,20 @@
 
 /*
  * @author: Mustafa BICER
- * @date: 25.08.24
- * @file: debug process.
- * @purpose: run this code to monitor or debug the system.
+ * @date: 5.09.24
+ * @file: general process.
+ * @purpose: this code is for general process.
  */
 
 #include "WString.h"
 #include "HardwareSerial.h"
 #include <ProcessScheduler.h>
-#include "../service/service_debug.hpp"
-#include "../service/service_qtr.hpp"
-#include "../service/service_mz80.hpp"
-#include "../service/service_motor.hpp"
-#include "../service/service_load.hpp"
-#include "../service/service_lift.hpp"
-#include "../service/service_distance.hpp"
+#include "../service/service_general.hpp"
 
 class DebugProcess : public Process
 {
 private:
-    DebugService *debugService;
-    DebugService *debugService0;
+    GeneralService *sgeneral;
 
 public:
     // Call the Process constructor
@@ -38,8 +31,7 @@ protected:
 
     virtual void setup()
     {
-        // debugService = new DebugService(1, 0);
-        debugService0 = new DebugService(3, 4);
+        sgeneral = new GeneralService(3, 5);
     }
 
     virtual void force()
