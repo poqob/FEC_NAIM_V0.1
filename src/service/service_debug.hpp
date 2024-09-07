@@ -27,19 +27,22 @@ public:
     DebugService(uint8_t group, uint8_t id) : CommService(group, id)
     {
         GatewayService::getInstance().subscribeService(this);
-        led = new LedHardware(13);
+        // led = new LedHardware(13);
     }
 
     DebugService(uint8_t group, uint8_t id, void (*cb)()) : CommService(group, id)
     {
         GatewayService::getInstance().subscribeService(this);
-        led = new LedHardware(13);
+        // led = new LedHardware(13);
         callbackFunc = cb; // TODO: implement callback function
     }
 
     // create package, send the package
     void service() override {
-
+        // Package _package = Package::build(device->id, device->subnet, group, id, 5, 2, 1, 1, "+220-110");
+        // p = new Package(_package.getContent());
+        // NetworkService::getInstance().send(p);
+        // delete p;
     };
 
     void handle(Package *package) override

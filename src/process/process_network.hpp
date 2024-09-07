@@ -33,13 +33,14 @@ protected:
 
   virtual void setup()
   {
-    Global::getInstance().device = new Device(0, 1, "uno");
+    Global::getInstance().device = new Device(1, 1, "uno");
 
     Uart *uart = new Uart(0, 115200);
     uint8_t ch = ChannelManager::getInstance().add(uart);
 
-    RoutingTable::getInstance().add(new Route(ch, Device(2, 2, "raspberry")));
+    RoutingTable::getInstance().add(new Route(ch, Device(1, 2, "raspberry")));
     RoutingTable::getInstance().add(new Route(ch, Device(3, 1, "esp32")));
+    RoutingTable::getInstance().add(new Route(ch, Device(7, 2, "win")));
   }
 
   virtual void force()

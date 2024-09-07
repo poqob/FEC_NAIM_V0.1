@@ -26,20 +26,26 @@ public:
         liftHardware1 = new LiftHardware(20, 21, 22, 23);
     }
 
-    void service() override
-    {
-        sendDumpData(); // ACTUALLY NO NEED TO BROADCAST ANY PACKAGE.
+    void service() override {
         // only receives on of packages.
     };
 
     void handle(Package *package) override
     {
+        receivedPackage = package;
         String data = receivedPackage->getData();
         data = data[0];
         if (data == "1")
+        {
             liftHardware1->lift(true);
+            Serial.println("Lift opened.");
+        }
         else
+        {
+
             liftHardware1->lift(false);
+            Serial.println("Lift closed.");
+        }
     };
 
     void response(String data) override {}

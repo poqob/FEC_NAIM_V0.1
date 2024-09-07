@@ -15,6 +15,7 @@ void networkSetup()
   uart = new Uart(0, 115200);
   uint8_t ch = ChannelManager::getInstance().add(uart);
   RoutingTable::getInstance().add(new Route(ch, Device(3, 1, "raspberry")));
+  RoutingTable::getInstance().add(new Route(ch, Device(5, 2, "win")));
 
   ds = new DumpService();
   ps = new PmudService();

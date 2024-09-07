@@ -34,6 +34,7 @@ protected:
     // Create our service routine
     virtual void service()
     {
+        debugService0->service();
     }
 
     virtual void setup()
